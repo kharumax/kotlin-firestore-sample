@@ -1,8 +1,9 @@
-package com.example.firestoresample.ui
+package com.example.firestoresample.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.firestoresample.R
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
