@@ -5,4 +5,8 @@
     <string name="search_fragment"></string>
     <string name="feed_fragment"></string>
     <string name="profile_fragment"></string>
+    <string name="login">ログイン</string>
+    <string name="change_signup">会員登録はこちら</string>
+    <string name="signup">会員登録</string>
+    <string name="change_login">ログインはこちら</string>
 </resources>
