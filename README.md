@@ -1,1 +1,25 @@
 # kotlin-firestore-sample
+
+
+ログイン機能(viewModel,view,repository)
+
+流れ
+①ボタンを押す
+　→入力項目が記入されていたら処理開始
+　→viewで呼び出し
+②viewModelで処理
+　→入力された値を元にログイン処理を行う
+　→repositoryで処理を任せる
+③repository
+　→実際に処理を行う
+　→taskが完了したのをviewModel側に通知したい
+　　・エラーが出た場合はそれをviewModelで反映させる
+
+repository内でviewModel側から監視するプロパティを作成しておく
+↓
+その値をviewModel側からの呼び出しで変更
+↓
+viewModelでその変更を感知して、view側に伝える
+↓
+ステータスを確認して、それに応じた処理を行う。
+　
