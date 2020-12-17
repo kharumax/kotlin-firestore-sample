@@ -1,5 +1,6 @@
 package com.example.firestoresample.data.repositories
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -18,8 +19,9 @@ class AuthRepository @Inject constructor() {
         return db.collection("users").document(uid).get()
     }
 
-    suspend fun login(email: MutableLiveData<String>, password: MutableLiveData<String>): Task<AuthResult> {
-        return mAuth.signInWithEmailAndPassword(email.toString(), password.toString())
+    suspend fun login(email: String, password: String): Task<AuthResult> {
+        Log.d("AuthRepository","login is called")
+        return mAuth.signInWithEmailAndPassword(email, password)
     }
 
 //    suspend fun register(email: String,password: String,fullname: String,username: String,image: Uri): Task<AuthResult> {

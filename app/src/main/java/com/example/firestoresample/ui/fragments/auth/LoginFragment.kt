@@ -13,35 +13,50 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.firestoresample.R
+import com.example.firestoresample.databinding.FragmentLoginBinding
 import com.example.firestoresample.ui.activities.MainActivity
 import com.example.firestoresample.viewmodels.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     /** Properties  */
     private lateinit var viewModel: AuthViewModel
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
+    /** Lifecycle  */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view =  inflater.inflate(R.layout.fragment_login, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater,container,false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
-        view.change_singup_button_login.setOnClickListener {
-            view.findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        binding.changeSingupButtonLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
-        view.send_button_login.setOnClickListener {
+        binding.sendButtonLogin.setOnClickListener {
             lifecycleScope.launch {
                 login()
             }
         }
-        return view
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     /** Helpers  */
