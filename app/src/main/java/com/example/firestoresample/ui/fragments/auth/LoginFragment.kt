@@ -1,6 +1,8 @@
 package com.example.firestoresample.ui.fragments.auth
 
 import android.content.Intent
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.firestoresample.R
 import com.example.firestoresample.databinding.FragmentLoginBinding
 import com.example.firestoresample.ui.activities.MainActivity
+import com.example.firestoresample.utils.NetworkResult
 import com.example.firestoresample.viewmodels.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -62,16 +65,24 @@ class LoginFragment : Fragment() {
     /** Helpers  */
     private suspend fun login() {
         viewModel.login()
-        viewModel.authStatus.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                // ログイン成功
-                Toast.makeText(requireContext(),"ログイン成功",Toast.LENGTH_LONG).show()
-                val intent = Intent(requireActivity(),MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            } else {
-                // ログイン失敗
-                Toast.makeText(requireContext(),"Error: ${viewModel.error.value.toString()}",Toast.LENGTH_LONG).show()
+        viewModel.authResponse.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is NetworkResult.Loading -> {
+                    progressBar_login.visibility = View.VISIBLE
+                    Log.d("LoginFragment","Loading....")
+                }
+                is NetworkResult.Error -> {
+                    // ログイン失敗
+                    progressBar_login.visibility = View.INVISIBLE
+                    Toast.makeText(requireContext(),response.message.toString(),Toast.LENGTH_LONG).show()
+                }
+                is NetworkResult.Success -> {
+                    // ログイン成功
+                    progressBar_login.visibility = View.INVISIBLE
+                    val intent = Intent(requireActivity(),MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
             }
         })
     }

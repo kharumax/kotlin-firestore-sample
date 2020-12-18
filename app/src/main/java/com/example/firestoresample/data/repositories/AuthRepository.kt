@@ -14,7 +14,7 @@ class AuthRepository @Inject constructor() {
     private val mAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
-    suspend fun loadUser(): Task<DocumentSnapshot> {
+    fun loadUser(): Task<DocumentSnapshot> {
         val uid = mAuth.currentUser?.uid.toString()
         return db.collection("users").document(uid).get()
     }
