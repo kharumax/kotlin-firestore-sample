@@ -11,7 +11,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.firestoresample.data.models.User
 import com.example.firestoresample.data.repositories.AuthRepository
 import com.example.firestoresample.utils.NetworkResult
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 
 
 class AuthViewModel @ViewModelInject constructor(application: Application): AndroidViewModel(application) {
@@ -24,8 +27,23 @@ class AuthViewModel @ViewModelInject constructor(application: Application): Andr
     var username = MutableLiveData<String>()
 
     var authResponse: MutableLiveData<NetworkResult<User>> = MutableLiveData()
+    lateinit var user: User
 
     /** Helpers */
+    fun checkUserIsLoggedIn(): Boolean {
+        return repository.mAuth.currentUser != null
+    }
+
+    fun loadUser() {
+        repository.loadUser().addOnCompleteListener { task ->
+            // ユーザー情報を読み込む
+            if (task.isSuccessful) {
+                val userData = task.result?.toObject(User::class.java)
+                user = (userData as User)
+            }
+        }
+    }
+
     suspend fun login() {
         authResponse.value = NetworkResult.Loading() // Loading状態
         repository.login(email.value.toString(),password.value.toString()).addOnCompleteListener {
@@ -36,6 +54,7 @@ class AuthViewModel @ViewModelInject constructor(application: Application): Andr
                     if (task.isSuccessful) {
                         val userData = task.result?.toObject(User::class.java)
                         authResponse.value = NetworkResult.Success(userData)
+
                     } else {
                         authResponse.value = NetworkResult.Error("Error ${task.exception?.message.toString()}")
                     }
@@ -55,22 +74,31 @@ class AuthViewModel @ViewModelInject constructor(application: Application): Andr
         repository.register(email.value.toString(),password.value.toString()).addOnCompleteListener {
             if (it.isSuccessful) {
                 // ユーザー登録成功
-                val url = repository.uploadProfileImage(imageUrl)
-                if (url.isNotEmpty()) {
-                    repository.saveUserData(email.value.toString(),username.value.toString(),fullname.value.toString(),url).addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-
-                        } else {
-
-                        }
+                val imageRef = repository.getProfileImageReference()
+                imageRef.putFile(imageUrl).addOnSuccessListener {
+                    imageRef.downloadUrl.addOnSuccessListener { imageUri ->
+                        repository.saveUserData(email.value.toString(),username.value.toString(),fullname.value.toString(),imageUri.toString())
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        repository.loadUser().addOnCompleteListener { task2 ->
+                                            // ユーザー情報を読み込む
+                                            if (task2.isSuccessful) {
+                                                val userData = task2.result?.toObject(User::class.java)
+                                                authResponse.value = NetworkResult.Success(userData)
+                                            } else {
+                                                authResponse.value = NetworkResult.Error("Error ${task2.exception?.message.toString()}")
+                                            }
+                                        }
+                                    } else {
+                                        authResponse.value = NetworkResult.Error("Error ${task.exception?.message.toString()}")
+                                    }
+                                }
                     }
                 }
             } else {
                 authResponse.value = NetworkResult.Error("Error ${it.exception?.message.toString()}")
             }
         }
-        FirebaseStorage.getInstance().getReference("/images/").putFile(imageUrl)
-
     }
 
 
