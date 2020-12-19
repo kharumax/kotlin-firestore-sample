@@ -69,6 +69,7 @@ class AuthViewModel @ViewModelInject constructor(application: Application): Andr
         }
     }
 
+    /** Memo:  ここのコードを綺麗にロジックとViewModelの処理を分けたい */
     suspend fun register(imageUrl: Uri) {
         authResponse.value = NetworkResult.Loading()
         repository.register(email.value.toString(),password.value.toString()).addOnCompleteListener {
