@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import coil.transition.CrossfadeTransition
 import com.example.firestoresample.R
 import com.example.firestoresample.data.models.Tweet
 import de.hdodenhof.circleimageview.CircleImageView
@@ -28,11 +29,9 @@ class TweetRowBinding {
 
         @BindingAdapter("loadProfileImageUrl")
         @JvmStatic
-        fun loadProfileImageUrl(imageView: ImageView,imageUrl: String) {
+        fun loadProfileImageUrl(imageView: CircleImageView,imageUrl: String) {
             Log.d("TweetRowBinding","ImageUrl is ${imageUrl}")
             imageView.load(imageUrl) {
-                transformations(RoundedCornersTransformation(topRight = 25f,topLeft = 25f,bottomRight = 25f,bottomLeft = 25f))
-                crossfade(600)
                 error(R.drawable.ic_person)
             }
         }
