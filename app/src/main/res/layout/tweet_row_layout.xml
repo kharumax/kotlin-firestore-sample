@@ -11,7 +11,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        onTweetClick="@{tweet}"
+        >
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -29,22 +33,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/profile_imageView_tweet"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    loadProfileImageUrl="@{tweet.profileImageUrl}"
+                    android:background="@drawable/background_circle_person"
+                    android:src="@drawable/ic_person"
+                     />
 
                 <TextView
                     android:id="@+id/fullname_textView_tweet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Fullname"
+                    android:text="@{tweet.fullname}"
                     android:textAllCaps="false"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -57,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Username"
+                    android:text="@{tweet.username}"
                     app:layout_constraintBottom_toBottomOf="@+id/fullname_textView_tweet"
                     app:layout_constraintStart_toEndOf="@+id/fullname_textView_tweet"
                     app:layout_constraintTop_toTopOf="@+id/fullname_textView_tweet" />
@@ -67,18 +74,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    setTimestampToString="@{tweet.timestamp}"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="@+id/username_textView_tweet"
                     app:layout_constraintStart_toEndOf="@+id/username_textView_tweet"
                     app:layout_constraintTop_toTopOf="@+id/username_textView_tweet" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/caption_textView_tweet"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="TextView"
+                    android:text="@{tweet.caption}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/fullname_textView_tweet"
                     app:layout_constraintTop_toBottomOf="@+id/fullname_textView_tweet" />
@@ -89,8 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4"
+                    app:layout_constraintStart_toStartOf="@+id/caption_textView_tweet"
+                    app:layout_constraintTop_toBottomOf="@+id/caption_textView_tweet"
                     app:srcCompat="@drawable/ic_comment" />
 
                 <TextView
@@ -139,6 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    setNumberOfLikes="@{tweet.likes}"
                     android:text="0"
                     app:layout_constraintBottom_toBottomOf="@+id/heart_imageView_tweet"
                     app:layout_constraintStart_toEndOf="@+id/heart_imageView_tweet"

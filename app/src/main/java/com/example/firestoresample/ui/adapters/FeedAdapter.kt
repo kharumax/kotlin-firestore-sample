@@ -2,9 +2,11 @@ package com.example.firestoresample.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.firestoresample.data.models.Tweet
 import com.example.firestoresample.databinding.TweetRowLayoutBinding
+import com.example.firestoresample.utils.CustomDiffUtil
 
 class FeedAdapter: RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
@@ -24,7 +26,6 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
                 return ViewHolder(binding)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,6 +39,13 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentTweet = tweets[position]
         holder.bind(currentTweet)
+    }
+
+    fun setData(newData: List<Tweet>) {
+        val customDiffUtil = CustomDiffUtil(tweets,newData)
+        val diffUtilResult = DiffUtil.calculateDiff(customDiffUtil)
+        tweets = newData
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 
 }
