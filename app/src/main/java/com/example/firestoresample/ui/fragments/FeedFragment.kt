@@ -38,15 +38,11 @@ class FeedFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_feed, container, false)
 
-        view.logout_button.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            startAuthActivity()
-        }
 
         return view
     }
 
-    fun startAuthActivity() {
+    private fun startAuthActivity() {
         val intent = Intent(requireActivity(),AuthActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)

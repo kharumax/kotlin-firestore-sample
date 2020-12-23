@@ -1,12 +1,13 @@
 # kotlin-firestore-sample
 
 ## メモ
-
+分からない＆あとで調べるメモ
 ①Taskや非同期処理が良くわかってない
 　→処理の仕組みと、分離の仕方
 
 
 
+実装メモ
 ログイン機能(viewModel,view,repository)
 
 流れ
