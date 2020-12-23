@@ -18,7 +18,7 @@ class FeedViewModel @ViewModelInject constructor(application: Application): Andr
     var feedResponse: MutableLiveData<NetworkResult<List<Tweet>>> = MutableLiveData()
 
     /** Helpers  */
-    suspend fun readTweets() {
+    fun readTweets() {
         viewModelScope.launch {
             feedResponse.value = NetworkResult.Loading()
             repository.readTweets()
@@ -40,7 +40,7 @@ class FeedViewModel @ViewModelInject constructor(application: Application): Andr
         }
     }
 
-    private suspend fun searchTweets() {
+    private fun searchTweets() {
 
     }
 

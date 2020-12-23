@@ -30,7 +30,6 @@ class TweetRowBinding {
         @BindingAdapter("loadProfileImageUrl")
         @JvmStatic
         fun loadProfileImageUrl(imageView: CircleImageView,imageUrl: String) {
-            Log.d("TweetRowBinding","ImageUrl is ${imageUrl}")
             imageView.load(imageUrl) {
                 error(R.drawable.ic_person)
             }

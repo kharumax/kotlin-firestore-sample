@@ -57,7 +57,7 @@ class FeedFragment : Fragment() {
     }
 
     /** APIs */
-    private suspend fun readTweets() {
+    private fun readTweets() {
         mFeedViewModel.readTweets()
         mFeedViewModel.feedResponse.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
