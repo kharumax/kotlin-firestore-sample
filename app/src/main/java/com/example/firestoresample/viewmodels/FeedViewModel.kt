@@ -40,9 +40,4 @@ class FeedViewModel @ViewModelInject constructor(application: Application): Andr
         }
     }
 
-    private fun searchTweets() {
-
-    }
-
-
 }

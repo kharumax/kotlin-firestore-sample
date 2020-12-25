@@ -18,7 +18,8 @@ class SearchRepository @Inject constructor() {
     }
 
     suspend fun searchUsers(query: String): Task<QuerySnapshot> {
-        return usersRef.whereEqualTo("fullname",query).get()
+        val searchUsersRef = usersRef.orderBy("fullname").startAt(query).endAt(query + '\uf8ff')
+        return searchUsersRef.get()
     }
 
 
