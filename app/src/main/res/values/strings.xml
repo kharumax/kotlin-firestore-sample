@@ -10,4 +10,7 @@
     <string name="signup">会員登録</string>
     <string name="change_login">ログインはこちら</string>
     <string name="search">Search</string>
+    <string name="profile_edit">プロフィールを編集</string>
+    <string name="follow">フォローする</string>
+    <string name="message">メッセージ</string>
 </resources>

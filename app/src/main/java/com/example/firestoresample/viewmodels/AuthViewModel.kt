@@ -27,7 +27,7 @@ class AuthViewModel @ViewModelInject constructor(application: Application): Andr
     var username = MutableLiveData<String>()
 
     var authResponse: MutableLiveData<NetworkResult<User>> = MutableLiveData()
-    lateinit var user: User
+    var user: MutableLiveData<User> = MutableLiveData()
 
     /** Helpers */
     fun checkUserIsLoggedIn(): Boolean {
@@ -39,7 +39,7 @@ class AuthViewModel @ViewModelInject constructor(application: Application): Andr
             // ユーザー情報を読み込む
             if (task.isSuccessful) {
                 val userData = task.result?.toObject(User::class.java)
-                user = (userData as User)
+                user.value = (userData as User)
             }
         }
     }

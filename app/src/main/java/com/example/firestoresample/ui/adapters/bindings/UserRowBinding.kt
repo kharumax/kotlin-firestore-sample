@@ -19,14 +19,6 @@ class UserRowBinding {
             }
         }
 
-
-        @BindingAdapter("setUsername")
-        @JvmStatic
-        @SuppressLint("SetTextI18n")
-        fun setUsername(textView: TextView,username: String) {
-            textView.text = "@$username"
-        }
-
     }
 
 }

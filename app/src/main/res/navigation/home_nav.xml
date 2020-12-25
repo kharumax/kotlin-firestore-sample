@@ -19,5 +19,23 @@
         android:id="@+id/profileFragment"
         android:name="com.example.firestoresample.ui.fragments.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+
+        <action
+            android:id="@+id/action_profileFragment_to_profileUpdateFragment"
+            app:destination="@id/profileUpdateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileUpdateFragment"
+        android:name="com.example.firestoresample.ui.fragments.ProfileUpdateFragment"
+        android:label="fragment_profile_update"
+        tools:layout="@layout/fragment_profile_update" >
+        <action
+            android:id="@+id/action_profileUpdateFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.example.firestoresample.data.models.User" />
+    </fragment>
+
 </navigation>

@@ -2,6 +2,7 @@ package com.example.firestoresample.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,9 +21,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(toolbar) // AndroidManifestでNavigationで元々、設定されていたActionBarを無効にして、作成したToolbarを利用する
         navController = findNavController(R.id.navHostHomeFragment)
-        val appBarConfiguration =  AppBarConfiguration(
-            setOf(R.id.feedFragment,R.id.searchFragment,R.id.profileFragment)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.feedFragment,R.id.searchFragment,R.id.profileFragment,R.id.profileUpdateFragment)
+            // ここのトップレベルで指定すれば、Toolbarの戻るボタンは非表示になる。
         )
 
         bottomNavigationView.setupWithNavController(navController)

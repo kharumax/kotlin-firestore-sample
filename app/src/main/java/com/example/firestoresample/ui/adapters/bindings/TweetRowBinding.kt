@@ -27,14 +27,6 @@ class TweetRowBinding {
             }
         }
 
-        @BindingAdapter("loadProfileImageUrl")
-        @JvmStatic
-        fun loadProfileImageUrl(imageView: CircleImageView,imageUrl: String) {
-            imageView.load(imageUrl) {
-                error(R.drawable.ic_person)
-            }
-        }
-
         @BindingAdapter("setTimestampToString")
         @JvmStatic
         @SuppressLint("SimpleDateFormat")
