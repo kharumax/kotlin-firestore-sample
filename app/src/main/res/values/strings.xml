@@ -13,4 +13,6 @@
     <string name="profile_edit">プロフィールを編集</string>
     <string name="follow">フォローする</string>
     <string name="message">メッセージ</string>
+    <string name="cancel">キャンセル</string>
+    <string name="update">更新する</string>
 </resources>

@@ -7,6 +7,6 @@ import com.example.firestoresample.R
 class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile_update)
+        setContentView(R.layout.activity_profile)
     }
 }
