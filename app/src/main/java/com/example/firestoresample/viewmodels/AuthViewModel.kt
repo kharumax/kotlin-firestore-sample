@@ -102,5 +102,8 @@ class AuthViewModel @ViewModelInject constructor(application: Application): Andr
         }
     }
 
+    suspend fun logout() {
+        repository.logout()
+    }
 
 }

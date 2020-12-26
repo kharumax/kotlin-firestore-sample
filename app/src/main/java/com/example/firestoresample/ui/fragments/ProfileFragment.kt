@@ -2,6 +2,7 @@ package com.example.firestoresample.ui.fragments
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import coil.load
 import com.example.firestoresample.R
 import com.example.firestoresample.data.models.User
 import com.example.firestoresample.databinding.FragmentProfileBinding
+import com.example.firestoresample.ui.activities.AuthActivity
 import com.example.firestoresample.utils.NetworkResult
 import com.example.firestoresample.viewmodels.AuthViewModel
 import com.example.firestoresample.viewmodels.ProfileViewModel
@@ -28,6 +30,7 @@ class ProfileFragment : Fragment() {
 
     /** Properties  */
     private lateinit var mProfileViewModel: ProfileViewModel
+    private lateinit var mAuthViewModel: AuthViewModel
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
@@ -36,6 +39,7 @@ class ProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
         mProfileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
         mProfileViewModel.loadUser()
+        mAuthViewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -83,6 +87,22 @@ class ProfileFragment : Fragment() {
             val action = ProfileFragmentDirections.actionProfileFragmentToProfileUpdateFragment(user)
             findNavController().navigate(action)
         }
+        binding.logoutButtonProfile.setOnClickListener {
+            logout()
+        }
+    }
+
+    private fun logout() {
+        lifecycleScope.launch {
+            mAuthViewModel.logout()
+            startAuthActivity()
+        }
+    }
+
+    private fun startAuthActivity() {
+        val intent = Intent(requireActivity(), AuthActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
 }

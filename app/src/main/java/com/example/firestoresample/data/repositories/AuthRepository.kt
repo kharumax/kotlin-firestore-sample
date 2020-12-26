@@ -31,6 +31,10 @@ class AuthRepository @Inject constructor() {
         return mAuth.createUserWithEmailAndPassword(email,password)
     }
 
+    suspend fun logout() {
+        mAuth.signOut()
+    }
+
     fun getProfileImageReference(): StorageReference {
         val uid = mAuth.currentUser!!.uid
         val filename = "${uid}_${UUID.randomUUID().toString()}"

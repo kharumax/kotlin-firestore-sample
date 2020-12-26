@@ -14,7 +14,11 @@
         android:id="@+id/searchFragment"
         android:name="com.example.firestoresample.ui.fragments.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_profileActivity"
+            app:destination="@id/profileActivity" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.firestoresample.ui.fragments.ProfileFragment"
@@ -37,5 +41,14 @@
             android:name="user"
             app:argType="com.example.firestoresample.data.models.User" />
     </fragment>
+    <activity
+        android:id="@+id/profileActivity"
+        android:name="com.example.firestoresample.ui.activities.ProfileActivity"
+        android:label="activity_profile"
+        tools:layout="@layout/activity_profile" >
+        <argument
+            android:name="user"
+            app:argType="com.example.firestoresample.data.models.User" />
+    </activity>
 
 </navigation>

@@ -19,15 +19,20 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // NoActionBarに設定したのに、supportActionBurでToolbarを呼び出していないのでエラー出した。
+        setTheme(R.style.Theme_FirestoreSampleAuth)
         setContentView(R.layout.activity_auth)
 
         navController = findNavController(R.id.navHostAuthFragment)
         // 下の設定でタイトルバー横の「←」が消える
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.registrationFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
+
     }
 
-
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 
 
 }
