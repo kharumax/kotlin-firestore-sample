@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.firestoresample.R
 import com.example.firestoresample.ui.activities.AuthActivity
@@ -47,7 +48,7 @@ class FeedFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_feed, container, false)
 
-        setUpRecyclerView(view)
+        setUpView(view)
 
         lifecycleScope.launch {
             readTweets()
@@ -75,11 +76,14 @@ class FeedFragment : Fragment() {
         })
     }
 
-
     /** Helpers */
-    private fun setUpRecyclerView(view: View) {
+    private fun setUpView(view: View) {
         view.feed_recyclerView.adapter = mAdapter // この時点で実行された返り値が返される
         view.feed_recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        view.new_tweet_button.setOnClickListener {
+            val action = FeedFragmentDirections.actionFeedFragmentToTweetFragment(mAuthViewModel.user.value!!)
+            findNavController().navigate(action)
+        }
     }
 
     private fun startAuthActivity() {

@@ -14,3 +14,7 @@ data class Tweet(
     val username: String = "",
     val profileImageUrl: String = ""
 )
+
+fun initTweet(user: User,caption: String,id: String): Tweet {
+    return Tweet(id,caption,0, Timestamp(Date()),user.uid,user.fullname,user.username,user.profileImageUrl)
+}

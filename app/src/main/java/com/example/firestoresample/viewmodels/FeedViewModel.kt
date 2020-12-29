@@ -7,7 +7,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.firestoresample.data.models.Tweet
+import com.example.firestoresample.data.models.User
 import com.example.firestoresample.data.repositories.FeedRepository
+import com.example.firestoresample.data.repositories.FeedRepository.Callback
 import com.example.firestoresample.utils.NetworkResult
 import kotlinx.coroutines.launch
 
@@ -16,27 +18,36 @@ class FeedViewModel @ViewModelInject constructor(application: Application): Andr
     /** Properties */
     private val repository = FeedRepository()
     var feedResponse: MutableLiveData<NetworkResult<List<Tweet>>> = MutableLiveData()
+    var caption: MutableLiveData<String> = MutableLiveData("")
 
     /** Helpers  */
     fun readTweets() {
         viewModelScope.launch {
             feedResponse.value = NetworkResult.Loading()
-            repository.readTweets()
-                    .addOnSuccessListener { documents ->
-                        if (!documents.isEmpty) {
-                            val tweets = mutableListOf<Tweet>()
-                            for (document in documents) {
-                                val tweetData = document.toObject(Tweet::class.java)
-                                tweets.add(tweetData)
-                            }
-                            feedResponse.value = NetworkResult.Success(tweets)
-                        } else {
-                            feedResponse.value = NetworkResult.Error("Error: No Data")
-                        }
+            repository.readTweets(object : Callback {
+                override fun <T> onSuccess(data: T) {
+                    feedResponse.value = NetworkResult.Success(data as List<Tweet>)
+                }
+                override fun onFailure(e: Exception) {
+                    feedResponse.value = NetworkResult.Error(e.message)
+                }
+            })
+        }
+    }
+
+    fun postTweet(user: User) {
+        if (!caption.value.isNullOrEmpty()) {
+            viewModelScope.launch {
+                repository.postTweet(user,caption.value!!, object : Callback {
+                    override fun <T> onSuccess(data: T) {
+                        readTweets()
                     }
-                    .addOnFailureListener {
-                        feedResponse.value = NetworkResult.Error("Error: ${it.message.toString()}")
+                    override fun onFailure(e: Exception) {
+                        Log.d("FeedViewModel","Error is ${e.message}")
                     }
+                })
+                caption.value = ""
+            }
         }
     }
 

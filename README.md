@@ -2,11 +2,7 @@
 
 ## 手順メモ
 次やること
-④Tweet出来るようにする
-　→Home FragmentからTweetFragmentに移動して、FeedViewModelからユーザー情報を取得する
-　→FeedViewModelで新規投稿を行う＋投稿データを新しくする関数を呼び出し
-　→HomeFragmentに戻る
-　
+⑤Tweet詳細ページ作成＆いいね(FeedFragment内で)&いいね＋コメント(Details内で)
 
 ## 後でやるメモ
 ①通信中にインジゲーターを表示する

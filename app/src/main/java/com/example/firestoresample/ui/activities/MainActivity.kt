@@ -24,10 +24,14 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar) // AndroidManifestでNavigationで元々、設定されていたActionBarを無効にして、作成したToolbarを利用する
         navController = findNavController(R.id.navHostHomeFragment)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            toolbar.visibility = if (destination.id == R.id.profileUpdateFragment) View.GONE else View.VISIBLE
+            toolbar.visibility =
+                if (destination.id == R.id.profileUpdateFragment || destination.id == R.id.tweetFragment)
+                    View.GONE
+                else
+                    View.VISIBLE
         }
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.feedFragment,R.id.searchFragment,R.id.profileFragment,R.id.profileUpdateFragment)
+            setOf(R.id.feedFragment,R.id.searchFragment,R.id.profileFragment,R.id.profileUpdateFragment,R.id.tweetFragment)
             // ここのトップレベルで指定すれば、Toolbarの戻るボタンは非表示になる。
         )
 

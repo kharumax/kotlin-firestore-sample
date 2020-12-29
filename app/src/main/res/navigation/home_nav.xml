@@ -9,7 +9,12 @@
         android:id="@+id/feedFragment"
         android:name="com.example.firestoresample.ui.fragments.FeedFragment"
         android:label="Feed"
-        tools:layout="@layout/fragment_feed" />
+        tools:layout="@layout/fragment_feed" >
+        <action
+            android:id="@+id/action_feedFragment_to_tweetFragment"
+            app:destination="@id/tweetFragment"
+            />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.firestoresample.ui.fragments.SearchFragment"
@@ -50,5 +55,17 @@
             android:name="user"
             app:argType="com.example.firestoresample.data.models.User" />
     </activity>
+    <fragment
+        android:id="@+id/tweetFragment"
+        android:name="com.example.firestoresample.ui.fragments.TweetFragment"
+        android:label="fragment_tweet"
+        tools:layout="@layout/fragment_tweet" >
+        <action
+            android:id="@+id/action_tweetFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.example.firestoresample.data.models.User" />
+    </fragment>
 
 </navigation>

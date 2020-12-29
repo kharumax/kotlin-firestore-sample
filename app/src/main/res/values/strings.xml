@@ -16,4 +16,5 @@
     <string name="cancel">キャンセル</string>
     <string name="update">更新する</string>
     <string name="logout">ログアウト</string>
+    <string name="post_tweet">投稿する</string>
 </resources>
