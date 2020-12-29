@@ -2,8 +2,11 @@
 
 ## 手順メモ
 次やること
-③フォローできるようにする
-他のユーザーのプロフィール画面を作成
+④Tweet出来るようにする
+　→Home FragmentからTweetFragmentに移動して、FeedViewModelからユーザー情報を取得する
+　→FeedViewModelで新規投稿を行う＋投稿データを新しくする関数を呼び出し
+　→HomeFragmentに戻る
+　
 
 ## 後でやるメモ
 ①通信中にインジゲーターを表示する
@@ -13,10 +16,7 @@
 
 
 ## 実装メモ
-③SearchFragmentから、ProfileActivityにsafe argsでuserを渡して遷移する
-　→userを渡して、viewModelをインスタンス化する
-　→userの情報の表示＆フォローの状態をBinding完了
-　→フォローできる
+
 
 ②
 プロフィール

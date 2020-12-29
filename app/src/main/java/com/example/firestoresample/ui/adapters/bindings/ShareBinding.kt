@@ -29,6 +29,20 @@ class ShareBinding {
             textView.text = "@$username"
         }
 
+        @SuppressLint("SetTextI18n")
+        @BindingAdapter("setFollowingCount")
+        @JvmStatic
+        fun setFollowingCount(textView: TextView,count: Int) {
+            textView.text = "$count Following"
+        }
+
+        @SuppressLint("SetTextI18n")
+        @BindingAdapter("setFollowersCount")
+        @JvmStatic
+        fun setFollowersCount(textView: TextView,count: Int) {
+            textView.text = "$count Followers"
+        }
+
     }
 
 

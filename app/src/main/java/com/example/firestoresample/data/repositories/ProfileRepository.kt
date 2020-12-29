@@ -1,9 +1,12 @@
 package com.example.firestoresample.data.repositories
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.util.*
@@ -13,6 +16,11 @@ class ProfileRepository @Inject constructor() {
 
     val mAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
+
+    interface Callback {
+        fun onSuccess(count: Int)
+        fun onFailure(e: Exception)
+    }
 
     fun loadUser(): Task<DocumentSnapshot> {
         val uid = mAuth.currentUser?.uid.toString()
@@ -38,34 +46,46 @@ class ProfileRepository @Inject constructor() {
         return FirebaseStorage.getInstance().reference.child(filename)
     }
 
-//    fun isCurrentUser(uid: String): Boolean {
-//        return currentUid == uid
-//    }
-//
-//    suspend fun isFollowed(uid: String): Task<DocumentSnapshot> {
-//        val followingRef = db.collection("following").document(currentUid).collection("user-following").document(uid)
-//        return followingRef.get()
-//    }
-//
-//    fun followFrom(uid: String): Task<Void> {
-//        val followingRef = db.collection("following").document(currentUid).collection("user-following").document(uid)
-//        return followingRef.set(true)
-//    }
-//
-//    fun followTo(uid: String): Task<Void> {
-//        val followersRef = db.collection("followers").document(uid).collection("user-followers").document(currentUid)
-//        return followersRef.set(true)
-//    }
-//
-//    fun unfollowFrom(uid: String): Task<Void> {
-//        val followingRef = db.collection("following").document(currentUid).collection("user-following").document(uid)
-//        return followingRef.delete()
-//    }
-//
-//    fun unfollowTo(uid: String): Task<Void> {
-//        val followersRef = db.collection("followers").document(uid).collection("user-followers").document(currentUid)
-//        return followersRef.delete()
-//    }
+    fun checkFollowingCount(callback: Callback) {
+        var following = 0
+        val followingRef = db.collection("following").document(mAuth.uid!!).collection("user-following")
+        followingRef.addSnapshotListener { value,e ->
+            if (e != null) {
+                Log.d("ProfileRepository","Error is ${e.message}")
+                callback.onFailure(e)
+            }
+            if (value != null && !value.isEmpty) {
+                for (doc in value) {
+                    following += 1
+                }
+                callback.onSuccess(following)
+            } else {
+                callback.onSuccess(0)
+            }
+
+        }
+    }
+
+    fun checkFollowersCount(callback: Callback) {
+        var followers = 0
+        val followersRef = db.collection("followers").document(mAuth.uid!!).collection("user-followers")
+        followersRef.addSnapshotListener { value,e ->
+            if (e != null) {
+                Log.d("ProfileRepository","Error is ${e.message}")
+                callback.onFailure(e)
+            }
+            if (value != null && !value.isEmpty) {
+                for (doc in value) {
+                    followers += 1
+                }
+                callback.onSuccess(followers)
+            } else {
+                callback.onSuccess(0)
+            }
+
+        }
+    }
+
 
 
 }

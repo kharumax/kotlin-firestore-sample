@@ -39,7 +39,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         binding.followButtonFeature.setOnClickListener {
-            mFeatureViewModel.followToggle()
+            followButtonOnClick()
         }
 
         Log.d("ProfileActivity","user is ${args.user.username}")
@@ -59,5 +59,17 @@ class ProfileActivity : AppCompatActivity() {
         super.onDestroy()
         _binding = null
     }
+
+    /** Helpers */
+    private fun followButtonOnClick() {
+        if (mFeatureViewModel.isFollowed.value!!) {
+            // フォローを外す処理を行う
+            mFeatureViewModel.unfollow()
+        } else {
+            // フォローする処理を行う
+            mFeatureViewModel.follow()
+        }
+    }
+
 
 }
