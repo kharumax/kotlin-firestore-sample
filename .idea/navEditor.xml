@@ -62,6 +62,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_feedFragment_to_tweetDetailFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_feedFragment_to_tweetFragment">
                               <value>
                                 <LayoutPositions />
@@ -147,13 +152,34 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="tweetDetailFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-233" />
+                            <option name="y" value="-366" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_tweetDetailFragment_to_feedFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="tweetFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-231" />
-                            <option name="y" value="-362" />
+                            <option name="x" value="-181" />
+                            <option name="y" value="428" />
                           </Point>
                         </option>
                         <option name="myPositions">
