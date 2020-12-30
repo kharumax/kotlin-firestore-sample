@@ -2,7 +2,9 @@ package com.example.firestoresample.ui.adapters.bindings
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import coil.load
 import com.example.firestoresample.R
@@ -41,6 +43,17 @@ class ShareBinding {
         @JvmStatic
         fun setFollowersCount(textView: TextView,count: Int) {
             textView.text = "$count Followers"
+        }
+
+        @BindingAdapter("setLikedStatus")
+        @JvmStatic
+        fun setLikedStatus(imageView: ImageView,isLiked: Boolean) {
+            if (isLiked) {
+                imageView.setImageResource(R.drawable.ic_heart)
+                imageView.setColorFilter(ContextCompat.getColor(imageView.context,R.color.red))
+            } else {
+                imageView.setImageResource(R.drawable.ic_not_heart)
+            }
         }
 
     }

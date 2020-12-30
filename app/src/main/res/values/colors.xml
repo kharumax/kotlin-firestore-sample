@@ -11,5 +11,6 @@
     <color name="lightGray">#e8ebed</color>
     <color name="twitterBlue">#1DA1F2</color>
     <color name="transparent">#00000000</color>
+    <color name="red">#ff0000</color>
 
 </resources>

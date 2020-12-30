@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class ProfileRepository @Inject constructor() {
 
-    val mAuth = FirebaseAuth.getInstance()
+    private val mAuth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
     interface Callback {
