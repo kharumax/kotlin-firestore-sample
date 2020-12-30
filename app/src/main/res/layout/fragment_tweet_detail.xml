@@ -1,14 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.TweetDetailFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
 
-</FrameLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/lightGray"
+            app:strokeWidth="1dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_imageView_tweet_detail"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/background_circle_person"
+                    android:src="@drawable/ic_person"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/fullname_textView_tweet_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/profile_imageView_tweet_detail"
+                    app:layout_constraintStart_toEndOf="@+id/profile_imageView_tweet_detail"
+                    app:layout_constraintTop_toTopOf="@+id/profile_imageView_tweet_detail" />
+
+                <TextView
+                    android:id="@+id/username_textView_tweet_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fullname_textView_tweet_detail"
+                    app:layout_constraintStart_toEndOf="@+id/fullname_textView_tweet_detail"
+                    app:layout_constraintTop_toTopOf="@+id/fullname_textView_tweet_detail" />
+
+                <TextView
+                    android:id="@+id/timestamp_textView_tweet_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/username_textView_tweet_detail"
+                    app:layout_constraintStart_toEndOf="@+id/username_textView_tweet_detail"
+                    app:layout_constraintTop_toTopOf="@+id/username_textView_tweet_detail" />
+
+                <TextView
+                    android:id="@+id/caption_textView_tweet_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/fullname_textView_tweet_detail"
+                    app:layout_constraintTop_toBottomOf="@+id/fullname_textView_tweet_detail" />
+
+                <ImageView
+                    android:id="@+id/comment_imageView_tweet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/caption_textView_tweet_detail"
+                    app:layout_constraintTop_toBottomOf="@+id/caption_textView_tweet_detail"
+                    app:srcCompat="@drawable/ic_comment" />
+
+                <TextView
+                    android:id="@+id/comment_textView_tweet_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    app:layout_constraintBottom_toBottomOf="@+id/comment_imageView_tweet"
+                    app:layout_constraintStart_toEndOf="@+id/comment_imageView_tweet"
+                    app:layout_constraintTop_toTopOf="@+id/comment_imageView_tweet" />
+
+                <ImageView
+                    android:id="@+id/repeat_imageView_tweet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/comment_textView_tweet_detail"
+                    app:layout_constraintStart_toEndOf="@+id/comment_textView_tweet_detail"
+                    app:layout_constraintTop_toTopOf="@+id/comment_textView_tweet_detail"
+                    app:srcCompat="@drawable/ic_repeat" />
+
+                <TextView
+                    android:id="@+id/repeat_textView_tweet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    app:layout_constraintBottom_toBottomOf="@+id/repeat_imageView_tweet"
+                    app:layout_constraintStart_toEndOf="@+id/repeat_imageView_tweet"
+                    app:layout_constraintTop_toTopOf="@+id/repeat_imageView_tweet" />
+
+                <ImageView
+                    android:id="@+id/heart_imageView_tweet_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/repeat_textView_tweet"
+                    app:layout_constraintStart_toEndOf="@+id/repeat_textView_tweet"
+                    app:layout_constraintTop_toTopOf="@+id/repeat_textView_tweet"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/ic_not_heart" />
+
+                <TextView
+                    android:id="@+id/heart_textView_tweet_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    app:layout_constraintBottom_toBottomOf="@+id/heart_imageView_tweet_detail"
+                    app:layout_constraintStart_toEndOf="@+id/heart_imageView_tweet_detail"
+                    app:layout_constraintTop_toTopOf="@+id/heart_imageView_tweet_detail" />
+
+                <ImageView
+                    android:id="@+id/save_imageView_tweet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/heart_textView_tweet_detail"
+                    app:layout_constraintStart_toEndOf="@+id/heart_textView_tweet_detail"
+                    app:layout_constraintTop_toTopOf="@+id/heart_textView_tweet_detail"
+                    app:srcCompat="@drawable/ic_save" />
+
+                <TextView
+                    android:id="@+id/save_textView_tweet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    app:layout_constraintBottom_toBottomOf="@+id/save_imageView_tweet"
+                    app:layout_constraintStart_toEndOf="@+id/save_imageView_tweet"
+                    app:layout_constraintTop_toTopOf="@+id/save_imageView_tweet" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_comments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/send_button_tweet_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+        <EditText
+            android:id="@+id/comment_editText_tweet_detail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/tweet_textview"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:hint="@string/write_comment"
+            app:layout_constraintBottom_toBottomOf="@+id/send_button_tweet_detail"
+            app:layout_constraintEnd_toStartOf="@+id/send_button_tweet_detail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/send_button_tweet_detail" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/send_button_tweet_detail"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/twitterBlue"
+            android:text="@string/send"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

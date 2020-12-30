@@ -13,10 +13,12 @@
 ⑤
 1.FeedFragmentから移動する
 　→詳細ページの表示を行う
-2.TweetDetailViewModel
+2.TweetDetailViewModel＆UI作成
 　→そこで、データの変更を感知する？
-3.いいね・コメントした場合は、FeedFragmentに戻る際にデータ変更を伝える
-4.データ変更を行う
+3.いいね＆Feedでデータ変更を行う
+4.コメントのためのRecyclerViewの設定を行う
+　→UI・ViewModel・Repository
+5.コメントを行う
 
 
 ①ユーザー一覧を作成する

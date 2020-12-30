@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/profileUpdateFragment"
         android:name="com.example.firestoresample.ui.fragments.ProfileUpdateFragment"
-        android:label="fragment_profile_update"
+        android:label="Update"
         tools:layout="@layout/fragment_profile_update" >
         <action
             android:id="@+id/action_profileUpdateFragment_to_profileFragment"
@@ -52,7 +52,7 @@
     <activity
         android:id="@+id/profileActivity"
         android:name="com.example.firestoresample.ui.activities.ProfileActivity"
-        android:label="activity_profile"
+        android:label="Profile"
         tools:layout="@layout/activity_profile" >
         <argument
             android:name="user"
@@ -61,7 +61,7 @@
     <fragment
         android:id="@+id/tweetFragment"
         android:name="com.example.firestoresample.ui.fragments.TweetFragment"
-        android:label="fragment_tweet"
+        android:label="New Tweet"
         tools:layout="@layout/fragment_tweet" >
         <action
             android:id="@+id/action_tweetFragment_to_feedFragment"
@@ -73,7 +73,7 @@
     <fragment
         android:id="@+id/tweetDetailFragment"
         android:name="com.example.firestoresample.ui.fragments.TweetDetailFragment"
-        android:label="fragment_tweet_detail"
+        android:label="Detail"
         tools:layout="@layout/fragment_tweet_detail" >
         <action
             android:id="@+id/action_tweetDetailFragment_to_feedFragment"

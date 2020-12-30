@@ -17,4 +17,6 @@
     <string name="update">更新する</string>
     <string name="logout">ログアウト</string>
     <string name="post_tweet">投稿する</string>
+    <string name="send">送信</string>
+    <string name="write_comment">コメントを記入</string>
 </resources>

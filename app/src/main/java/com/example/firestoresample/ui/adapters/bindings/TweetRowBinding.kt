@@ -6,12 +6,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
+import androidx.navigation.findNavController
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import coil.transition.CrossfadeTransition
 import com.example.firestoresample.R
 import com.example.firestoresample.data.models.Tweet
 import com.example.firestoresample.ui.fragments.FeedFragment
+import com.example.firestoresample.ui.fragments.FeedFragmentDirections
 import de.hdodenhof.circleimageview.CircleImageView
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
@@ -25,7 +27,12 @@ class TweetRowBinding {
         fun onTweetClick(tweetRowLayout: ConstraintLayout,tweet: Tweet) {
             tweetRowLayout.setOnClickListener {
                 Log.d("TweetRowBinding","onTweetClick is click and tweet is ${tweet}")
-
+                try {
+                    val action = FeedFragmentDirections.actionFeedFragmentToTweetDetailFragment(tweet)
+                    tweetRowLayout.findNavController().navigate(action)
+                } catch (e: Exception) {
+                    Log.d("TweetRowBinding","Error is ${e.message}")
+                }
             }
         }
 
