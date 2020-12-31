@@ -28,7 +28,6 @@ class TweetDetailAdapter: RecyclerView.Adapter<TweetDetailAdapter.ViewHolder>() 
                 return ViewHolder(binding)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

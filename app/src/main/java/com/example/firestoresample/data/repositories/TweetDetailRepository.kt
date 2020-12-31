@@ -1,5 +1,6 @@
 package com.example.firestoresample.data.repositories
 
+import android.util.Log
 import com.example.firestoresample.data.models.Tweet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,11 +27,12 @@ class TweetDetailRepository {
     }
 
     suspend fun like(tweet: Tweet,callback: Callback) {
-        val likedRef = db.collection("tweet").document(tweet.id)
+        val likedRef = db.collection("tweets").document(tweet.id)
         val likedData: Map<String,Int> = mapOf("likes" to tweet.likes + 1)
         likedRef.update(likedData)
             .addOnSuccessListener {
-                val userLikedRef = db.collection("users").document(mAuth.uid!!).collection("user-likes").document()
+                Log.d("TweetDetailRepository","likedRef.update is success")
+                val userLikedRef = db.collection("users").document(mAuth.uid!!).collection("user-likes").document(tweet.id)
                 val data: Map<String, Boolean> = mapOf("status" to true)
                 userLikedRef.set(data)
                     .addOnSuccessListener {
@@ -46,14 +48,14 @@ class TweetDetailRepository {
     }
 
     suspend fun unlike(tweet: Tweet,callback: Callback) {
-        val likedRef = db.collection("tweet").document(tweet.id)
+        val likedRef = db.collection("tweets").document(tweet.id)
         val likedData: Map<String,Int> = mapOf("likes" to tweet.likes - 1)
         likedRef.update(likedData)
             .addOnSuccessListener {
-                val userLikedRef = db.collection("users").document(mAuth.uid!!).collection("user-likes").document()
+                val userLikedRef = db.collection("users").document(mAuth.uid!!).collection("user-likes").document(tweet.id)
                 userLikedRef.delete()
                     .addOnSuccessListener {
-                        callback.onSuccess(true)
+                        callback.onSuccess(false)
                     }
                     .addOnFailureListener {
                         callback.onFailure(it)

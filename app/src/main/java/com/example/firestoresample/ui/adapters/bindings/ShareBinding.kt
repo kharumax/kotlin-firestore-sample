@@ -53,6 +53,7 @@ class ShareBinding {
                 imageView.setColorFilter(ContextCompat.getColor(imageView.context,R.color.red))
             } else {
                 imageView.setImageResource(R.drawable.ic_not_heart)
+                imageView.setColorFilter(ContextCompat.getColor(imageView.context,R.color.lightGray))
             }
         }
 

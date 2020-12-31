@@ -51,7 +51,11 @@ class TweetDetailFragment : Fragment() {
     /** Helpers */
     private fun setUpView() {
         binding.heartImageViewTweetDetail.setOnClickListener {
-            mDetailViewModel.like()
+            if (mDetailViewModel.isLiked.value!!) {
+                mDetailViewModel.unlike()
+            } else {
+                mDetailViewModel.like()
+            }
         }
     }
 

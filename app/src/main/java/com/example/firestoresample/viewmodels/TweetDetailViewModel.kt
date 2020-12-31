@@ -44,8 +44,29 @@ class TweetDetailViewModel(val tweet: Tweet) : ViewModel() {
     }
 
     fun like() {
-        isLiked.value = !isLiked.value!!
-        likedCount.value = likedCount.value?.plus(1)
+        viewModelScope.launch {
+            repository.like(tweet,object : Callback {
+                override fun <T> onSuccess(data: T) {
+                    isLiked.value = true
+                }
+                override fun onFailure(e: Exception) {
+                    Log.d("TweetDetailViewModel","Error is ${e.message}")
+                }
+            })
+        }
+    }
+
+    fun unlike() {
+        viewModelScope.launch {
+            repository.unlike(tweet,object : Callback {
+                override fun <T> onSuccess(data: T) {
+                    isLiked.value = false
+                }
+                override fun onFailure(e: Exception) {
+                    Log.d("TweetDetailViewModel","Error is ${e.message}")
+                }
+            })
+        }
     }
 
 }
