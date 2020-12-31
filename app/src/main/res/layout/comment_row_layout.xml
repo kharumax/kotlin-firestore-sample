@@ -17,7 +17,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +33,7 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_imageView_comment"
+                    loadProfileImageUrl="@{comment.profileImageUrl}"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="16dp"
@@ -47,7 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Username"
+                    setUsername="@{comment.username}"
+
                     app:layout_constraintBottom_toBottomOf="@+id/profile_imageView_comment"
                     app:layout_constraintStart_toEndOf="@+id/profile_imageView_comment"
                     app:layout_constraintTop_toTopOf="@+id/profile_imageView_comment" />
@@ -57,7 +59,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="TextView"
+                    setTimestampToString="@{comment.timestamp}"
+
                     app:layout_constraintBottom_toBottomOf="@+id/username_textView_comment"
                     app:layout_constraintStart_toEndOf="@+id/username_textView_comment"
                     app:layout_constraintTop_toTopOf="@+id/username_textView_comment" />
@@ -67,7 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Comment here .."
+                    android:text="@{comment.text}"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"

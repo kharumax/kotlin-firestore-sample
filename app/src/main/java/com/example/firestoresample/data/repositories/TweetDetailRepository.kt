@@ -1,7 +1,10 @@
 package com.example.firestoresample.data.repositories
 
 import android.util.Log
+import com.example.firestoresample.data.models.Comment
 import com.example.firestoresample.data.models.Tweet
+import com.example.firestoresample.data.models.User
+import com.example.firestoresample.data.models.initComment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -64,6 +67,36 @@ class TweetDetailRepository {
             .addOnFailureListener {
                 callback.onFailure(it)
             }
+    }
+
+    suspend fun readComments(tweetId: String,callback: Callback) {
+        val commentsRef = db.collection("tweets").document(tweetId).collection("comments")
+        commentsRef.get()
+                .addOnSuccessListener { documents ->
+                    val comments = mutableListOf<Comment>()
+                    if (!documents.isEmpty) {
+                        for (doc in documents) {
+                            val commentData = doc.toObject(Comment::class.java)
+                            comments.add(commentData)
+                        }
+                    }
+                    callback.onSuccess(comments)
+                }
+                .addOnFailureListener {
+                    callback.onFailure(it)
+                }
+    }
+
+    suspend fun postComment(tweetId: String,user: User,text: String,callback: Callback) {
+        val commentsRef = db.collection("tweets").document(tweetId).collection("comments").document()
+        val comment = initComment(user,text,commentsRef.id)
+        commentsRef.set(comment)
+                .addOnSuccessListener {
+                    callback.onSuccess(comment)
+                }
+                .addOnFailureListener {
+                    callback.onFailure(it)
+                }
     }
 
 }

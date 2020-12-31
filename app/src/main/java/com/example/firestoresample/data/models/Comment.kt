@@ -11,3 +11,7 @@ data class Comment(
     val username: String = "",
     val profileImageUrl: String = ""
 )
+
+fun initComment(user: User,text: String,id: String): Comment {
+    return Comment(id,text, Timestamp(Date()),user.uid,user.username,user.profileImageUrl)
+}
