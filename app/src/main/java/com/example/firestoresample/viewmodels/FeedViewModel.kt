@@ -51,4 +51,8 @@ class FeedViewModel @ViewModelInject constructor(application: Application): Andr
         }
     }
 
+    fun like() {
+
+    }
+
 }

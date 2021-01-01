@@ -19,11 +19,6 @@ class FeedRepository @Inject constructor() {
         fun onFailure(e: Exception)
     }
 
-    suspend fun readTweets(): Task<QuerySnapshot> {
-        val tweetsRef = db.collection("tweets").orderBy("timestamp")
-        return tweetsRef.get()
-    }
-
     suspend fun readTweets(callback: Callback) {
         val tweetsRef = db.collection("tweets").orderBy("timestamp")
         tweetsRef.get()
@@ -42,6 +37,10 @@ class FeedRepository @Inject constructor() {
             .addOnFailureListener {
                 callback.onFailure(it)
             }
+    }
+
+    suspend fun readFeeds(callback: Callback) {
+
     }
 
     suspend fun postTweet(user: User,caption: String,callback: Callback) {
