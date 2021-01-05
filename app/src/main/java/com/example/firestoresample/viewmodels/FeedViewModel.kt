@@ -22,7 +22,6 @@ class FeedViewModel @ViewModelInject constructor(application: Application): Andr
     var caption: MutableLiveData<String> = MutableLiveData("")
 
     /** Helpers  */
-
     fun readFeeds() {
         viewModelScope.launch {
             feedsResponse.value = NetworkResult.Loading()
