@@ -9,19 +9,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager.widget.PagerAdapter
 import coil.load
 import com.example.firestoresample.R
 import com.example.firestoresample.data.models.User
 import com.example.firestoresample.databinding.FragmentProfileBinding
 import com.example.firestoresample.ui.activities.AuthActivity
+import com.example.firestoresample.ui.adapters.tabs.TabAdapter
 import com.example.firestoresample.utils.NetworkResult
 import com.example.firestoresample.viewmodels.AuthViewModel
 import com.example.firestoresample.viewmodels.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.launch
 
 
@@ -40,6 +44,14 @@ class ProfileFragment : Fragment() {
         mProfileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
         mProfileViewModel.loadUser()
         mAuthViewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+        viewPager_profile.adapter = TabAdapter(fragmentManager)
+        tabLayout_profile.setupWithViewPager(viewPager_profile)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
