@@ -12,9 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navArgs
 import com.example.firestoresample.R
 import com.example.firestoresample.databinding.ActivityProfileBinding
+import com.example.firestoresample.ui.adapters.tabs.TabAdapter
 import com.example.firestoresample.viewmodels.FeatureViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_profile.*
 
+@AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
 
     private val args by navArgs<ProfileActivityArgs>()
@@ -41,6 +44,8 @@ class ProfileActivity : AppCompatActivity() {
         binding.followButtonFeature.setOnClickListener {
             followButtonOnClick()
         }
+        binding.viewPagerProfileActivity.adapter = TabAdapter(supportFragmentManager,args.user)
+        binding.tabLayoutProfileActivity.setupWithViewPager(binding.viewPagerProfileActivity)
 
         Log.d("ProfileActivity","user is ${args.user.username}")
 

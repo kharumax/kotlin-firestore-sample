@@ -51,7 +51,7 @@ class FeedRepository @Inject constructor() {
 
     /* N+1問題多発箇所。。。Firestoreのデータ設計を変更すれば行ける？？？ */
     suspend fun readFeeds(callback: Callback) {
-        checkIsLiked(object : Callback {
+        checkIsLiked(mAuth.uid!!,object : Callback {
             override fun <T> onSuccess(data: T) {
                 val likedIds = (data as List<String>)
                 val tweetsRef = db.collection("tweets").orderBy("timestamp")
@@ -83,8 +83,8 @@ class FeedRepository @Inject constructor() {
         })
     }
 
-    private fun checkIsLiked(callback: Callback) {
-        val likedRef = db.collection("users").document(mAuth.uid!!).collection("user-likes")
+    private fun checkIsLiked(userId: String,callback: Callback) {
+        val likedRef = db.collection("users").document(userId).collection("user-likes")
         val likedIds = mutableListOf<String>()
         likedRef.get()
                 .addOnSuccessListener { documents ->
@@ -153,7 +153,7 @@ class FeedRepository @Inject constructor() {
     }
 
     suspend fun readUserFeeds(userId: String,callback: Callback) {
-        checkIsLiked(object : Callback {
+        checkIsLiked(mAuth.uid!!,object : Callback {
             override fun <T> onSuccess(data: T) {
                 val likedIds = (data as List<String>)
                 val tweetsRef = db.collection("tweets").whereEqualTo("uid",userId)
@@ -186,7 +186,7 @@ class FeedRepository @Inject constructor() {
     }
 
     suspend fun readUserLikedFeeds(userId: String,callback: Callback) {
-        checkIsLiked(object : Callback {
+        checkIsLiked(userId,object : Callback {
             override fun <T> onSuccess(data: T) {
                 val likedIds = (data as List<String>)
                 val tweetsRef = db.collection("tweets")
