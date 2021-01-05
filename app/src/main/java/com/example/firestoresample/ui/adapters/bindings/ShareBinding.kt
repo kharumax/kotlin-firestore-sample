@@ -48,6 +48,7 @@ class ShareBinding {
         @BindingAdapter("setLikedStatus")
         @JvmStatic
         fun setLikedStatus(imageView: ImageView,isLiked: Boolean) {
+            Log.d("ShareBinding","setLikedStatus is called and isLiked is ${isLiked}")
             if (isLiked) {
                 imageView.setImageResource(R.drawable.ic_heart)
                 imageView.setColorFilter(ContextCompat.getColor(imageView.context,R.color.red))

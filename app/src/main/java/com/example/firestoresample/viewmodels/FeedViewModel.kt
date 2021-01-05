@@ -6,6 +6,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.firestoresample.data.models.Feed
 import com.example.firestoresample.data.models.Tweet
 import com.example.firestoresample.data.models.User
 import com.example.firestoresample.data.repositories.FeedRepository
@@ -17,30 +18,33 @@ class FeedViewModel @ViewModelInject constructor(application: Application): Andr
 
     /** Properties */
     private val repository = FeedRepository()
-    var feedResponse: MutableLiveData<NetworkResult<List<Tweet>>> = MutableLiveData()
+    var feedsResponse: MutableLiveData<NetworkResult<List<Feed>>> = MutableLiveData()
     var caption: MutableLiveData<String> = MutableLiveData("")
 
     /** Helpers  */
-    fun readTweets() {
+
+    fun readFeeds() {
         viewModelScope.launch {
-            feedResponse.value = NetworkResult.Loading()
-            repository.readTweets(object : Callback {
+            feedsResponse.value = NetworkResult.Loading()
+            repository.readFeeds(object : Callback {
                 override fun <T> onSuccess(data: T) {
-                    feedResponse.value = NetworkResult.Success(data as List<Tweet>)
+                    Log.d("FeedViewModel","readFeed is Success")
+                    Log.d("FeedViewModel","feed is ${data}")
+                    feedsResponse.value = NetworkResult.Success(data as List<Feed>)
                 }
                 override fun onFailure(e: Exception) {
-                    feedResponse.value = NetworkResult.Error(e.message)
+                    feedsResponse.value = NetworkResult.Error(e.message)
                 }
             })
         }
     }
 
-    fun postTweet(user: User) {
+    fun postFeed(user: User) {
         if (!caption.value.isNullOrEmpty()) {
             viewModelScope.launch {
                 repository.postTweet(user,caption.value!!, object : Callback {
                     override fun <T> onSuccess(data: T) {
-                        readTweets()
+                        readFeeds()
                     }
                     override fun onFailure(e: Exception) {
                         Log.d("FeedViewModel","Error is ${e.message}")
@@ -51,8 +55,36 @@ class FeedViewModel @ViewModelInject constructor(application: Application): Andr
         }
     }
 
-    fun like() {
+    fun like(feed: Feed) {
+        viewModelScope.launch {
+            repository.like(feed.tweet,object : Callback {
+                override fun <T> onSuccess(data: T) {
+                    val position = feedsResponse.value!!.data!!.indexOfFirst { it.tweet.id == feed.tweet.id }
+                    Log.d("FeedViewModel","position is ${position}")
+                    feedsResponse.value!!.data!![position].liked = true
+                    feedsResponse.value!!.data!![position].tweet.likes.plus(1)
+                }
+                override fun onFailure(e: Exception) {
+                    Log.d("FeedViewModel","Error is ${e.message}")
+                }
+            })
+        }
+    }
 
+    fun unlike(feed: Feed) {
+        viewModelScope.launch {
+            repository.like(feed.tweet,object : Callback {
+                override fun <T> onSuccess(data: T) {
+                    val position = feedsResponse.value!!.data!!.indexOfFirst { it.tweet.id == feed.tweet.id }
+                    Log.d("FeedViewModel","position is ${position}")
+                    feedsResponse.value!!.data!![position].liked = false
+                    feedsResponse.value!!.data!![position].tweet.likes.minus(1)
+                }
+                override fun onFailure(e: Exception) {
+                    Log.d("FeedViewModel","Error is ${e.message}")
+                }
+            })
+        }
     }
 
 }

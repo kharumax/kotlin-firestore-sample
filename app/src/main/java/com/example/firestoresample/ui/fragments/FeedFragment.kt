@@ -30,7 +30,7 @@ class FeedFragment : Fragment() {
     /** Properties */
     private lateinit var mAuthViewModel: AuthViewModel
     private lateinit var mFeedViewModel: FeedViewModel
-    private val mAdapter by lazy { FeedAdapter() } //初期化を遅らす。実行結果はまだない。呼ばれた際に処理が実行され、それ以降は同じ返り値を返す
+    private val mAdapter: FeedAdapter by lazy { FeedAdapter(mFeedViewModel) } //初期化を遅らす。実行結果はまだない。呼ばれた際に処理が実行され、それ以降は同じ返り値を返す
 
     /** Lifecycle */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,16 +51,16 @@ class FeedFragment : Fragment() {
         setUpView(view)
 
         lifecycleScope.launch {
-            readTweets()
+            readFeeds()
         }
 
         return view
     }
 
     /** APIs */
-    private fun readTweets() {
-        mFeedViewModel.readTweets()
-        mFeedViewModel.feedResponse.observe(viewLifecycleOwner, Observer { response ->
+    private fun readFeeds() {
+        mFeedViewModel.readFeeds()
+        mFeedViewModel.feedsResponse.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is NetworkResult.Loading -> {
                     Log.d("FeedFragment","Loading ...")

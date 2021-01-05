@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="tweet"
-            type="com.example.firestoresample.data.models.Tweet" />
+            name="feed"
+            type="com.example.firestoresample.data.models.Feed" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        onTweetClick="@{tweet}"
+        onTweetClick="@{feed.tweet}"
         >
 
         <com.google.android.material.card.MaterialCardView
@@ -41,7 +41,7 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    loadProfileImageUrl="@{tweet.profileImageUrl}"
+                    loadProfileImageUrl="@{feed.tweet.profileImageUrl}"
                     android:background="@drawable/background_circle_person"
                     android:src="@drawable/ic_person"
                      />
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="@{tweet.fullname}"
+                    android:text="@{feed.tweet.fullname}"
                     android:textAllCaps="false"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="@{tweet.username}"
+                    android:text="@{feed.tweet.username}"
                     app:layout_constraintBottom_toBottomOf="@+id/fullname_textView_tweet"
                     app:layout_constraintStart_toEndOf="@+id/fullname_textView_tweet"
                     app:layout_constraintTop_toTopOf="@+id/fullname_textView_tweet" />
@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    setTimestampToString="@{tweet.timestamp}"
+                    setTimestampToString="@{feed.tweet.timestamp}"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="@+id/username_textView_tweet"
                     app:layout_constraintStart_toEndOf="@+id/username_textView_tweet"
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="@{tweet.caption}"
+                    android:text="@{feed.tweet.caption}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/fullname_textView_tweet"
                     app:layout_constraintTop_toBottomOf="@+id/fullname_textView_tweet" />
@@ -106,6 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    setNumberOfLikes="@{feed.tweet.comments}"
                     android:text="0"
                     app:layout_constraintBottom_toBottomOf="@+id/comment_imageView_tweet"
                     app:layout_constraintStart_toEndOf="@+id/comment_imageView_tweet"
@@ -133,6 +134,7 @@
 
                 <ImageView
                     android:id="@+id/heart_imageView_tweet"
+                    setLikedStatus="@{feed.liked}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -147,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    setNumberOfLikes="@{tweet.likes}"
+                    setNumberOfLikes="@{feed.tweet.likes}"
                     android:text="0"
                     app:layout_constraintBottom_toBottomOf="@+id/heart_imageView_tweet"
                     app:layout_constraintStart_toEndOf="@+id/heart_imageView_tweet"

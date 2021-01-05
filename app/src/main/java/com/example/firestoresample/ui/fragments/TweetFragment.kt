@@ -57,8 +57,8 @@ class TweetFragment : Fragment() {
     }
 
     private fun postTweet(user: User) {
-        viewModel.postTweet(user)
-        viewModel.feedResponse.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.postFeed(user)
+        viewModel.feedsResponse.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is NetworkResult.Loading -> {
                     Log.d("TweetFragment","Loading...")

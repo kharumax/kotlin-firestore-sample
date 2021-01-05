@@ -27,13 +27,15 @@ class TweetDetailViewModel(val tweet: Tweet) : ViewModel() {
 
     var isLiked: MutableLiveData<Boolean> = MutableLiveData()
     var likedCount: MutableLiveData<Int> = MutableLiveData()
-    var commentCount: MutableLiveData<Int> = MutableLiveData(0)
+    var commentCount: MutableLiveData<Int> = MutableLiveData()
+
     var commentsResponse: MutableLiveData<NetworkResult<List<Comment>>> = MutableLiveData()
     var commentText: MutableLiveData<String> = MutableLiveData("")
 
     init {
         checkIsLiked()
         likedCount.value = tweet.likes
+        commentCount.value = tweet.comments
     }
 
     private fun checkIsLiked() {
