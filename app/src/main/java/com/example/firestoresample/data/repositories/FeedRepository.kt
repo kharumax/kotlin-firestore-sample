@@ -152,6 +152,70 @@ class FeedRepository @Inject constructor() {
                 }
     }
 
+    suspend fun readUserFeeds(userId: String,callback: Callback) {
+        checkIsLiked(object : Callback {
+            override fun <T> onSuccess(data: T) {
+                val likedIds = (data as List<String>)
+                val tweetsRef = db.collection("tweets").whereEqualTo("uid",userId)
+                tweetsRef.get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            val feeds = mutableListOf<Feed>()
+                            for (document in documents) {
+                                val tweetData = document.toObject(Tweet::class.java)
+                                var isLiked = true
+                                if (likedIds.indexOf(tweetData.id) == -1) {
+                                    isLiked = false
+                                }
+                                val feed = Feed(tweetData,isLiked)
+                                feeds.add(feed)
+                            }
+                            callback.onSuccess(feeds)
+                        } else {
+                            callback.onFailure(Exception("No Data Here"))
+                        }
+                    }
+                    .addOnFailureListener {
+                        callback.onFailure(it)
+                    }
+            }
+            override fun onFailure(e: Exception) {
+                callback.onFailure(e)
+            }
+        })
+    }
+
+    suspend fun readUserLikedFeeds(userId: String,callback: Callback) {
+        checkIsLiked(object : Callback {
+            override fun <T> onSuccess(data: T) {
+                val likedIds = (data as List<String>)
+                val tweetsRef = db.collection("tweets")
+                tweetsRef.get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            val feeds = mutableListOf<Feed>()
+                            for (document in documents) {
+                                val tweetData = document.toObject(Tweet::class.java)
+                                if (likedIds.indexOf(tweetData.id) != -1 ){
+                                    val feed = Feed(tweetData,true)
+                                    feeds.add(feed)
+                                }
+                            }
+                            callback.onSuccess(feeds)
+                        } else {
+                            callback.onFailure(Exception("No Data Here"))
+                        }
+                    }
+                    .addOnFailureListener {
+                        callback.onFailure(it)
+                    }
+            }
+            override fun onFailure(e: Exception) {
+                callback.onFailure(e)
+            }
+        })
+    }
+
 }
 
 /*

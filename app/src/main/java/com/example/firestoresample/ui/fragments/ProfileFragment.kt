@@ -41,6 +41,7 @@ class ProfileFragment : Fragment() {
     /** Lifecycle  */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("ProfileFragment","onCreate is called")
         mProfileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
         mProfileViewModel.loadUser()
         mAuthViewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
@@ -48,13 +49,23 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.d("ProfileFragment","onViewCreated is called")
+        /*
+        childFragmentManagerの場合は、Tweet一覧が表示されたが、下の
         val fragmentManager = (activity as FragmentActivity).supportFragmentManager
-        viewPager_profile.adapter = TabAdapter(fragmentManager)
+        やparentFragmentManagerの場合は表示されなかった。
+
+        FragmentManagerはフラグメントに対するアクション（追加や削除、バックスタックへの追加など）を実行するクラス
+        Activityは変更されていないので、fragmentManagerのgetItemが呼ばれない
+        →ホストのFragment（ここでは、ProfileFragment)のFragmentManagerではなく、Activityの方を参照していたから
+        * */
+
+        viewPager_profile.adapter = TabAdapter(childFragmentManager,mAuthViewModel.user.value!!)
         tabLayout_profile.setupWithViewPager(viewPager_profile)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.d("ProfileFragment","onCreateView is called")
         _binding = FragmentProfileBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = mProfileViewModel
